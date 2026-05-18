@@ -14,6 +14,22 @@
     --muted: #8a8a8a;
     --light: #e8e8e5;
     --border: #ebebea;
+    --accent: #111827;
+    --button-bg: #111827;
+    --button-color: #ffffff;
+  }
+
+  body.dark {
+    --bg: #0f172a;
+    --surface: #111827;
+    --dark: #f8fafc;
+    --mid: #cbd5e1;
+    --muted: #94a3b8;
+    --light: #334155;
+    --border: #334155;
+    --accent: #38bdf8;
+    --button-bg: #f8fafc;
+    --button-color: #0f172a;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,6 +53,10 @@
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
+  body.dark nav {
+    background: rgba(15,23,42,0.92);
+    border-bottom-color: rgba(148,163,184,0.16);
+  }
   .nav-logo {
     font-family: 'Geist', sans-serif;
     font-weight: 600; font-size: .82rem;
@@ -58,6 +78,39 @@
   }
   .nav-cta:hover { opacity: 0.75; }
 
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: space-between;
+    width: 108px; min-width: 108px;
+    height: 36px; padding: 0 10px;
+    border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--border); color: var(--dark);
+    font-size: .72rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .theme-toggle:hover { opacity: 0.95; }
+  .theme-toggle-track {
+    position: relative; width: 42px; height: 20px;
+    border-radius: 999px; background: var(--border);
+    flex-shrink: 0;
+  }
+  .theme-toggle-thumb {
+    position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); transition: left .2s, background .2s;
+  }
+  .theme-toggle.active {
+    background: var(--dark); color: var(--bg);
+    border-color: transparent;
+  }
+  .theme-toggle.active .theme-toggle-track {
+    background: var(--button-bg);
+  }
+  .theme-toggle.active .theme-toggle-thumb {
+    left: 24px;
+    background: var(--button-color);
+  }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -74,6 +127,21 @@
   .eyebrow-text {
     font-size: .72rem; font-weight: 500; letter-spacing: 2.5px;
     text-transform: uppercase; color: var(--muted);
+  }
+  .hero-headshot {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .hero-headshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   h1 {
     font-family: 'Fraunces', serif;
@@ -100,7 +168,7 @@
   }
   .hero-actions { display: flex; gap: 12px; }
   .btn-solid {
-    background: var(--dark); color: #fff; padding: 12px 28px;
+    background: var(--dark); color: var(--bg); padding: 12px 28px;
     border-radius: 2px; font-size: .78rem; font-weight: 600;
     letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
     transition: opacity .2s; display: inline-block;
@@ -263,6 +331,12 @@
   }
   .project-link:hover { background: var(--surface); border-color: var(--dark); }
   .project-link-dim { color: var(--muted); }
+  .project-link-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: center;
+  }
 
   /* ── EXPERIENCE ── */
   .experience { background: var(--surface); }
@@ -334,7 +408,7 @@
   .cf-group input::placeholder, .cf-group textarea::placeholder { color: var(--light); }
   .cf-group textarea { min-height: 120px; }
   .btn-form {
-    background: var(--dark); color: #fff;
+    background: var(--dark); color: var(--bg);
     border: none; padding: 12px 28px; border-radius: 2px;
     font-family: 'Geist', sans-serif; font-size: .75rem; font-weight: 600;
     letter-spacing: 1.5px; text-transform: uppercase;
@@ -408,6 +482,10 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to dark theme">
+    <span class="theme-toggle-label">Dark</span>
+    <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+  </button>
   <a href="#contact" class="nav-cta">Hire Me</a>
 </nav>
 
@@ -439,7 +517,7 @@
     </div>
     <div class="hp-card">
       <div class="hp-label">Current Role</div>
-      <div class="hp-value">UI/UX Designer · Ambitious Concern</div>
+      <div class="hp-value">Chairman & Moderator, AC Academy | UI/UX Designer | Product Manager | Full Stack Developer</div>
     </div>
     <div class="hp-card">
       <div class="hp-label">Location</div>
@@ -575,34 +653,124 @@
       <div class="project-index">01</div>
       <div class="project-info">
         <div class="project-tags-row">
-          <span class="ptag">UI/UX</span><span class="ptag">Figma</span><span class="ptag">Prototype</span>
+          <span class="ptag">Tech Education Platform</span><span class="ptag">Chairman & Moderator</span><span class="ptag">Active</span>
         </div>
-        <h3>Project Pollord</h3>
-        <p>A fully designed polling and voting platform prototype — crafted in Figma with meticulous attention to user flows, visual hierarchy, and accessible interactions. An end-to-end demonstration of product design thinking.</p>
+        <h3>AC Academy</h3>
+        <p>AC Academy is a tech-focused learning initiative under Ambitious Concern that equips young people with practical digital skills in UI/UX design, product design, product management, web development, and other technology-related areas.</p>
+        <p><strong>Portfolio focus:</strong> Leadership, programme coordination, student engagement, curriculum support, tech training, and facilitation.</p>
       </div>
-      <a href="https://www.figma.com/proto/kzE31WIVSoSToDvEASF9c4/PROJECT-POLLORD?node-id=0-1&t=5T2G8VkrD4IUq0fu-1" target="_blank" class="project-link">View Prototype ↗</a>
+      <span class="project-link project-link-dim">Active</span>
     </div>
     <div class="project-row reveal">
       <div class="project-index">02</div>
       <div class="project-info">
         <div class="project-tags-row">
-          <span class="ptag">Web Design</span><span class="ptag">HTML/CSS/JS</span><span class="ptag">Branding</span>
+          <span class="ptag">Digital Platform</span><span class="ptag">Product Manager</span><span class="ptag">Prototype</span>
         </div>
-        <h3>AC Academy Website</h3>
-        <p>Designed and built the full website for Ambitious Concern's tech education platform — course listings, multi-method authentication modal, and a premium brand identity for the Ghanaian market.</p>
+        <h3>Pollord</h3>
+        <p>Pollord is a digital voting and polling platform designed to help individuals, groups, and institutions create and manage polls or elections with a simple and secure experience.</p>
+        <p><strong>Portfolio focus:</strong> Poll creation flow, voting experience, dashboard structure, KYC verification concept, user trust, security thinking, and admin review flow.</p>
       </div>
-      <span class="project-link project-link-dim">In Progress</span>
+      <span class="project-link project-link-dim">Prototype / In Progress</span>
     </div>
     <div class="project-row reveal">
       <div class="project-index">03</div>
       <div class="project-info">
         <div class="project-tags-row">
-          <span class="ptag">Full Stack</span><span class="ptag">React</span><span class="ptag">Vercel</span>
+          <span class="ptag">Accommodation Search</span><span class="ptag">Product Manager</span><span class="ptag">Concept</span>
         </div>
-        <h3>Personal Portfolio v1</h3>
-        <p>My original portfolio — built with React and deployed on Vercel. A clean showcase of design and development capabilities, continuously updated as new work is completed.</p>
+        <h3>FindRoom</h3>
+        <p>FindRoom is a web platform designed to help National Service personnel, students, and workers in Ghana find accommodation across different regions while allowing landlords to upload rooms after KYC verification.</p>
+        <p><strong>Portfolio focus:</strong> User search by location, price, and room type, landlord onboarding, KYC verification, room upload process, booking ticket idea, and admin mediation.</p>
       </div>
-      <a href="https://kingportfolio-three.vercel.app" target="_blank" class="project-link">Live Site ↗</a>
+      <span class="project-link project-link-dim">Concept / Prototype</span>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">04</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">E-commerce</span><span class="ptag">Product Designer</span><span class="ptag">MVP</span>
+        </div>
+        <h3>PEARLJ ELIXIR</h3>
+        <p>PEARLJ ELIXIR is an e-commerce platform for perfumes, cosmetics, clothing, and lifestyle products, built with a WhatsApp checkout approach for the MVP.</p>
+        <p><strong>Portfolio focus:</strong> Product catalogue, cart experience, WhatsApp checkout, admin product upload concept, future Paystack payment plan, and Supabase backend direction.</p>
+      </div>
+      <a href="https://pearlj-elixir.vercel.app" target="_blank" class="project-link">Live Preview ↗</a>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">05</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Fintech UI</span><span class="ptag">Product Designer</span><span class="ptag">In Progress</span>
+        </div>
+        <h3>Servana</h3>
+        <p>Servana is a data bundle purchasing web app designed with a mobile-first, fintech-inspired interface for browsing bundles, selecting a network, entering order details, and moving through a simple checkout flow.</p>
+        <p><strong>Portfolio focus:</strong> Mobile-first UI, bundle selection flow, checkout flow, admin dashboard concept, fintech-inspired layout, and future backend/payment integration.</p>
+      </div>
+      <span class="project-link project-link-dim">Frontend Prototype / In Progress</span>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">06</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Portfolio Website</span><span class="ptag">UI/UX Designer</span><span class="ptag">Live</span>
+        </div>
+        <h3>Personal Portfolio</h3>
+        <p>A personal portfolio website built to present skills, projects, experience, and professional identity across UI/UX design, product management, full stack development, entrepreneurship, and tech education.</p>
+        <p><strong>Portfolio focus:</strong> Personal branding, project showcase, experience presentation, and professional identity.</p>
+      </div>
+      <div class="project-link-row">
+        <a href="https://kingportfolio-three.vercel.app" target="_blank" class="project-link">Vercel ↗</a>
+        <a href="https://fiifi-14.github.io/portfolio/" target="_blank" class="project-link">GitHub Pages ↗</a>
+      </div>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">07</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Logistics Tracking</span><span class="ptag">Product Manager</span><span class="ptag">Concept</span>
+        </div>
+        <h3>TrackLite / Trackr</h3>
+        <p>TrackLite is a logistics tracking concept for small delivery operators, enabling shipment creation, rider assignment, delivery status updates, and customer package tracking via code.</p>
+        <p><strong>Portfolio focus:</strong> Shipment creation, rider assignment, delivery status updates, customer tracking code, release planning, MVP prioritization, and user stories.</p>
+      </div>
+      <span class="project-link project-link-dim">Concept / Product Plan</span>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">08</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Service Website</span><span class="ptag">Frontend Developer</span><span class="ptag">Live</span>
+        </div>
+        <h3>Blue Seal Website</h3>
+        <p>Blue Seal is a simple static website created to advertise document processing services, designed as a clean service landing page and deployed on GitHub Pages.</p>
+        <p><strong>Portfolio focus:</strong> Service landing page, clean design, and online presence for document processing services.</p>
+      </div>
+      <a href="https://fiifi-14.github.io/blueseal-website/" target="_blank" class="project-link">Live Website ↗</a>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">09</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Local Commerce</span><span class="ptag">UI/UX Designer</span><span class="ptag">Concept</span>
+        </div>
+        <h3>Jane &amp; Mikes</h3>
+        <p>Jane &amp; Mikes is a local commerce website concept for a shop in Achiase that sells provisions, cosmetics, building materials, and everyday items, enabling online orders and delivery.</p>
+        <p><strong>Portfolio focus:</strong> Local commerce concept, product categories, order flow, location-based delivery, and simple customer experience.</p>
+      </div>
+      <span class="project-link project-link-dim">Concept</span>
+    </div>
+    <div class="project-row reveal">
+      <div class="project-index">10</div>
+      <div class="project-info">
+        <div class="project-tags-row">
+          <span class="ptag">Education Showcase</span><span class="ptag">Product Designer</span><span class="ptag">Concept</span>
+        </div>
+        <h3>AC Academy Graduate Project Showcase</h3>
+        <p>A proposed feature for AC Academy showing graduate projects with short summaries, allowing recruiters to view project topics, names, descriptions, and purpose.</p>
+        <p><strong>Portfolio focus:</strong> Graduate roster row, project page structure, recruiter-friendly summaries, anonymous collaboration mention, and education portfolio layout.</p>
+      </div>
+      <span class="project-link project-link-dim">Concept / UI Structure</span>
     </div>
   </div>
 </section>
@@ -683,11 +851,19 @@
           </div>
           <span class="clink-arrow">↗</span>
         </a>
-        <a href="https://www.instagram.com/ambitious.concern/" target="_blank" class="clink">
+        <a href="https://www.instagram.com/uncle.__.d/" target="_blank" class="clink">
           <div class="clink-icon">📸</div>
           <div class="clink-text">
             <div class="clink-label">Instagram</div>
-            <div class="clink-val">@ambitious.concern</div>
+            <div class="clink-val">@uncle.__.d</div>
+          </div>
+          <span class="clink-arrow">↗</span>
+        </a>
+        <a href="https://www.snapchat.com/add/serv_thee?share_id=dDv6OeerSHyD7EqCY7HmDw&locale=en_MG" target="_blank" class="clink">
+          <div class="clink-icon">👻</div>
+          <div class="clink-text">
+            <div class="clink-label">Snapchat</div>
+            <div class="clink-val">serv_thee</div>
           </div>
           <span class="clink-arrow">↗</span>
         </a>
@@ -698,22 +874,22 @@
         <div class="form-row">
           <div class="cf-group">
             <label>Name</label>
-            <input type="text" placeholder="Your full name">
+            <input id="contactName" type="text" placeholder="Your full name">
           </div>
           <div class="cf-group">
             <label>Email</label>
-            <input type="email" placeholder="your@email.com">
+            <input id="contactEmail" type="email" placeholder="your@email.com">
           </div>
         </div>
         <div class="cf-group">
           <label>Subject</label>
-          <input type="text" placeholder="What's this about?">
+          <input id="contactSubject" type="text" placeholder="What's this about?">
         </div>
         <div class="cf-group">
           <label>Message</label>
-          <textarea placeholder="Tell me about your project or idea..."></textarea>
+          <textarea id="contactMessage" placeholder="Tell me about your project or idea..."></textarea>
         </div>
-        <button class="btn-form" onclick="submitForm()">Send Message →</button>
+        <button id="contactSubmit" class="btn-form" type="button">Send Message →</button>
       </div>
       <div class="form-success" id="formSuccess">
         <h3>Message received.</h3>
@@ -729,7 +905,8 @@
   <div class="footer-links">
     <a href="https://www.linkedin.com/in/kingsfordfiifiamponsahdonkor" target="_blank">LinkedIn</a>
     <a href="https://wa.me/233535803051" target="_blank">WhatsApp</a>
-    <a href="https://www.instagram.com/ambitious.concern/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/uncle.__.d/" target="_blank">Instagram</a>
+    <a href="https://www.snapchat.com/add/serv_thee?share_id=dDv6OeerSHyD7EqCY7HmDw&locale=en_MG" target="_blank">Snapchat</a>
     <a href="https://x.com/Ambitious__C" target="_blank">X</a>
     <a href="https://kingportfolio-three.vercel.app" target="_blank">Portfolio</a>
   </div>
@@ -747,9 +924,51 @@
   }, { threshold: 0.08 });
   revealEls.forEach(el => obs.observe(el));
 
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+  function applyTheme(theme) {
+    document.body.classList.toggle('dark', theme === 'dark');
+    themeToggle.classList.toggle('active', theme === 'dark');
+    themeToggle.querySelector('.theme-toggle-label').textContent = theme === 'dark' ? 'Light' : 'Dark';
+    themeToggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+    localStorage.setItem('theme', theme);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(nextTheme);
+  });
+
+  applyTheme(initialTheme);
+
+  const contactSubmit = document.getElementById('contactSubmit');
+  const contactName = document.getElementById('contactName');
+  const contactEmail = document.getElementById('contactEmail');
+  const contactSubject = document.getElementById('contactSubject');
+  const contactMessage = document.getElementById('contactMessage');
+
+  contactSubmit.addEventListener('click', submitForm);
+
   function submitForm() {
+    const name = contactName.value.trim();
+    const email = contactEmail.value.trim();
+    const subject = contactSubject.value.trim() || 'Portfolio inquiry';
+    const message = contactMessage.value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in your name, email, and message before sending.');
+      return;
+    }
+
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    const mailtoLink = `mailto:kingsfordamponsah14@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
+    window.location.href = mailtoLink;
   }
 </script>
 </body>
